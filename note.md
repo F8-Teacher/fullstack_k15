@@ -18,3 +18,19 @@ Chỉ nên chuyển thành client component khi bắt buộc (Giảm bundle size
 
 - Lần đầu có RSC Payload của trang hiện tại
 - Khi navigate (Bấm vào Link) ==> Gọi API đến trang mới ==> Lấy về RSC Payload của trang mới ==> So sánh với RSC Payload của trang cũ ==> Tìm điểm khác nhau ==> React DOM chỉ cập nhật nội dung thay đổi
+
+## Route Handler
+
+- Cho phép viết các endpoint API nội bộ
+- Sử dụng các tính năng của next: cookie, revalidate cache,...
+
+Giống page trong nextjs, khác tên file: route.js hoặc route.ts
+
+## Server Action
+
+- Mutation
+- Server Function: Hàm chỉ chạy trên server, tự động tạo ra 1 endpoint với method là Post
+- 2 loại:
+
+* Inline: Chỉ gọi từ server component
+* File: Gọi ở mọi nơi

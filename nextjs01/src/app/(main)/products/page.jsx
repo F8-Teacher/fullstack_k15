@@ -1,6 +1,7 @@
 import Image from "next/image";
 import SearchInput from "./SearchInput";
 import Link from "next/link";
+// import { cookies } from "next/headers";
 const getProducts = async (q = "") => {
   const response = await fetch(
     `${process.env.SERVER_API}/products/search?q=${q}`,
@@ -14,6 +15,10 @@ const getProducts = async (q = "") => {
 export default async function ProductsPage({ searchParams }) {
   const { page, q } = await searchParams;
   const products = await getProducts(q);
+  // const cookieStore = await cookies();
+  // console.log(cookieStore.get("token"));
+  // cookieStore.delete("token");
+
   return (
     <div>
       <h1 className="text-3xl">Products</h1>

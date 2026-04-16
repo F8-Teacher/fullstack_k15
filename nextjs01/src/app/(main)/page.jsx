@@ -1,9 +1,11 @@
 import Button from "./_components/Button";
 export default function HomePage() {
+  console.log("home page");
+
   return (
     <div>
       <h1 className="text-3xl">Home</h1>
-      <Button count={10} />
+      <Button />
     </div>
   );
 }

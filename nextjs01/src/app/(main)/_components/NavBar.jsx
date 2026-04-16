@@ -1,9 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { use, useState } from "react";
+import { MainContext } from "./MainProvider";
 
 export default function NavBar() {
   const [logo, setLogo] = useState("LOGO");
+  const { isAuth } = use(MainContext);
+  console.log(isAuth);
+
   return (
     <header className="flex justify-between py-3 items-center max-w-300 mx-auto">
       <span
