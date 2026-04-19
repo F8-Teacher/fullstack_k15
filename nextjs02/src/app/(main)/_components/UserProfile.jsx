@@ -1,12 +1,11 @@
 "use client";
 
+import { logout } from "@/app/actions/auth.action";
 import { useAuth } from "@/app/hooks/useAuth";
 import Link from "next/link";
 
 export default function UserProfile() {
   const { user, isAuthenticated, isLoading } = useAuth();
-  useAuth();
-  useAuth();
   return (
     <>
       {isLoading ? (
@@ -15,7 +14,7 @@ export default function UserProfile() {
         <>
           <li>Chào: {user.fullName}</li>
           <li>
-            <button>Logout</button>
+            <button onClick={logout}>Logout</button>
           </li>
         </>
       ) : (
@@ -25,4 +24,5 @@ export default function UserProfile() {
       )}
     </>
   );
+  return null;
 }

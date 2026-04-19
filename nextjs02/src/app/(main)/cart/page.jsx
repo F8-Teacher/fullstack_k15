@@ -1,19 +1,11 @@
-import { getAccessToken } from "@/app/actions/auth.action";
-import { CONFIG } from "@/app/constants/config.constant";
+import { fetchWrapper } from "@/app/utils/fetch";
 
 const getCartList = async () => {
-  const accessToken = await getAccessToken();
-  const response = await fetch(`${CONFIG.BASE_API}/shopping-cart`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await fetchWrapper(`/shopping-cart`);
   return response.json();
 };
 export default async function CartPage() {
   const { items, total } = await getCartList();
-  console.log(items);
-
   return (
     <div>
       <h1 className="text-3xl mb-3">Cart</h1>

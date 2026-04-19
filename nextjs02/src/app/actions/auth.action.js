@@ -3,6 +3,8 @@
 import { CONFIG } from "@/app/constants/config.constant";
 import { cookies } from "next/headers";
 import { cache } from "react";
+import { fetchWrapper } from "../utils/fetch";
+import { redirect } from "next/navigation";
 
 export const loginAction = async (prevState, formData) => {
   const email = formData.get("email");
@@ -82,7 +84,10 @@ export const makeRefreshToken = async () => {
     httpOnly: true,
     maxAge: 86400,
   });
-  return true;
+  return {
+    accessToken: data.accessToken,
+    refreshToken: data.refreshToken,
+  };
 };
 
 export const getAccessToken = async () => {
@@ -94,4 +99,12 @@ export const getRefreshToken = async () => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get("refreshToken")?.value;
   return refreshToken;
+};
+
+export const logout = async () => {
+  fetchWrapper("/auth/logout");
+  const cookieStore = await cookies();
+  cookieStore.delete("accessToken");
+  cookieStore.delete("refreshToken");
+  redirect("/auth/login");
 };
