@@ -1,0 +1,19 @@
+@import "tailwindcss";
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  @apply py-3 font-medium;
+}
+.post-content h2 {
+  @apply text-xl;
+}
+.post-content h3 {
+  @apply text-lg;
+}
+.post-content p {
+  @apply py-3;
+}
+.post-content ul {
+  list-style: disc inside;
+  margin-bottom: 15px;
+}

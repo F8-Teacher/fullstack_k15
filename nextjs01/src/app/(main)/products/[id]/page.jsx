@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ProductImage from "./ProductImage";
+import { getProducts } from "../page";
 
 const getProduct = async (id) => {
   const response = await fetch(`${process.env.SERVER_API}/products/${id}`);
@@ -8,7 +9,16 @@ const getProduct = async (id) => {
   }
   return response.json();
 };
+
+export async function generateStaticParams() {
+  const products = await getProducts();
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
+}
 export default async function ProductDetail({ params }) {
+  // const products = await getProducts();
+  // console.log(products);
   const { id } = await params;
   const product = await getProduct(id);
   return (
