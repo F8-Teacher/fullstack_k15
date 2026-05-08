@@ -1,0 +1,9 @@
+model Permission {
+    id              Int              @id @default(autoincrement())
+    name            String
+    rolePermissions RolePermission[]
+    createdAt       DateTime         @default(now()) @db.Timestamp()
+    updatedAt       DateTime         @default(now()) @updatedAt @db.Timestamp()
+
+    @@map("permissions")
+}

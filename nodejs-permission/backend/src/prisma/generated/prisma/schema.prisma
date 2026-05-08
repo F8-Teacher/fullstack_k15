@@ -1,0 +1,87 @@
+model Permission {
+  id              Int              @id @default(autoincrement())
+  name            String
+  rolePermissions RolePermission[]
+  createdAt       DateTime         @default(now()) @db.Timestamp()
+  updatedAt       DateTime         @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("permissions")
+}
+
+model Role {
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  rolePermissions RolePermission[]
+  userRoles       UserRole[]
+  createdAt       DateTime         @default(now()) @db.Timestamp()
+  updatedAt       DateTime         @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("roles")
+}
+
+model RolePermission {
+  id           Int        @id @default(autoincrement())
+  permissionId Int
+  roleId       Int
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+  createdAt    DateTime   @default(now()) @db.Timestamp()
+  updatedAt    DateTime   @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("roles_permissions")
+}
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum UserType {
+  CUSTOMER
+  ADMIN
+  STAFF
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  name      String
+  password  String
+  type      UserType   @default(CUSTOMER)
+  userRoles UserRole[]
+  createdAt DateTime   @default(now()) @db.Timestamp()
+  updatedAt DateTime   @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("users")
+}
+
+model UserPermission {
+  id           Int      @id @default(autoincrement())
+  permissionId Int
+  userId       Int
+  createdAt    DateTime @default(now()) @db.Timestamp()
+  updatedAt    DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("users_permissions")
+}
+
+model UserRole {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  roleId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  role      Role     @relation(fields: [roleId], references: [id])
+  createdAt DateTime @default(now()) @db.Timestamp()
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamp()
+
+  @@map("users_roles")
+}

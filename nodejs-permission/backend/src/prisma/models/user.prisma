@@ -1,0 +1,18 @@
+enum UserType {
+    CUSTOMER
+    ADMIN
+    STAFF
+}
+
+model User {
+    id        Int        @id @default(autoincrement())
+    email     String     @unique
+    name      String
+    password  String
+    type      UserType   @default(CUSTOMER)
+    userRoles UserRole[]
+    createdAt DateTime   @default(now()) @db.Timestamp()
+    updatedAt DateTime   @default(now()) @updatedAt @db.Timestamp()
+
+    @@map("users")
+}
